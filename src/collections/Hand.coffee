@@ -4,7 +4,14 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop())
+    if (_.min(@scores()) < 21)
+      @add(@deck.pop())
+
+  stand: ->
+    while (@isDealer and _.min(@scores()) < 17)
+      # @models[0].flip();
+      this.models[0].flip();
+      @add(@deck.pop())
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
