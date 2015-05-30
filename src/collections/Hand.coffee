@@ -14,7 +14,7 @@ class window.Hand extends Backbone.Collection
     # if 2 aces (max = 22) -> 12
     # if 1 ace + 10JQK -> BlackJack ... WIN
     # if scores contain 21, yield that, otherwise u
-    if not this.clickedStand
+    if not @clickedStand and not @isBlackJack()
       if _.max(@scores()) < 21 or _.min(@scores()) < 21
         @add(@deck.pop())
 
@@ -30,9 +30,17 @@ class window.Hand extends Backbone.Collection
     while (@isDealer and _.min(@scores()) < 17 and _.max(@scores()) != 21)
       @add(@deck.pop())
 
+  # if its one ace and max score = 21 -> blackjack || 2 cards and max score is 21
+
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
   , 0
+
+  isBlackJack: ->
+    if @hasAce() and _.max(@scores()) == 21 and this.models.length == 2
+      return true
+    return false
+  ,
 
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
