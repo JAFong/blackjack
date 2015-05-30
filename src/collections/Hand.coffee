@@ -40,6 +40,11 @@ class window.Hand extends Backbone.Collection
     return false
   ,
 
+  isBust: ->
+    if _.min(@scores()) > 21
+      console.log 'Busted'
+      @trigger('playerLose', @)
+
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0

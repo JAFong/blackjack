@@ -15,6 +15,8 @@ class window.HandView extends Backbone.View
     @$('.score').text \
       if @collection.scores()[0] > 21 and @collection.scores()[1] > 21
         'Bust'
+      else if @collection.isBlackJack()
+        'BlackJack!'
       else if @collection.scores()[1] <= 21
         @collection.scores()[1]
       else
