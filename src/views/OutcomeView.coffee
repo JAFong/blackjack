@@ -3,16 +3,16 @@ class window.OutcomeView extends Backbone.View
   template: _.template '
     <%if (this.playerLose) {%>
       Player Loses!
-    <%}%>'
+    <%} else {%>
+      "Player Wins!"
+    <%}%>
+    '
     # else if (tie)
     #   "Tie Game"
-    # else
-    #   "Player Wins!"
-    # '
 
-  playerLose: false
-  tieGame: false
-  playerWin: false
+  # playerLose: false
+  # tieGame: false
+  # playerWin: false
 
   initialize: =>
     @model.get('playerHand').on 'playerLose', =>
@@ -20,6 +20,16 @@ class window.OutcomeView extends Backbone.View
       @playerLose = true
       @render()
       return
+    @model.get('playerHand').on 'playerWin', =>
+      @playerWin = true
+      @render()
+      return
+    # @model.on 'dealerBlackJack', =>
+    #   @playerLose = true
+    #   @render()
+    # @model.on 'playerBlackJack', =>
+    #   @playerWin = true
+    #   @render()
 
   render: ->
     @$el.html(@template())
