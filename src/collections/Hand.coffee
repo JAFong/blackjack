@@ -6,9 +6,6 @@ class window.Hand extends Backbone.Collection
     #   debugger;
     #   if array[0].get('value') + array[1].get('value') == 11
     #     console.log 'win'
-
-    console.log this
-    console.log(@isBlackJack)
     @clickedStand = false
     return
 
@@ -21,7 +18,6 @@ class window.Hand extends Backbone.Collection
         @add(@deck.pop())
 
   stand: ->
-    console.log @
      #
     if (not @isDealer)
       @clickedStand = true
