@@ -2,23 +2,32 @@ class window.Hand extends Backbone.Collection
   model: Card
 
   initialize: (array, @deck, @isDealer) ->
+    # if @hasAce() and not @isDealer
+    #   debugger;
+    #   if array[0].get('value') + array[1].get('value') == 11
+    #     console.log 'win'
+    #
     @clickedStand = false
-    @over21 = false
     return
 
   hit: ->
-    if (_.min(@scores()) < 21 and not @clickedStand)
-      @add(@deck.pop())
-    if (_.min(@scores()) > 21)
-      @over21 = true
+    # if 2 aces (max = 22) -> 12
+    # if 1 ace + 10JQK -> BlackJack ... WIN
+    # if scores contain 21, yield that, otherwise u
+    if not this.clickedStand
+      if _.max(@scores()) < 21 or _.min(@scores()) < 21
+        @add(@deck.pop())
 
   stand: ->
+    console.log @
+     #
     if (not @isDealer)
       @clickedStand = true
     if (@isDealer and not @clickedStand)
+      #
       @clickedStand = true
       @models[0].flip()
-    while (@isDealer and _.min(@scores()) < 17)
+    while (@isDealer and _.min(@scores()) < 17 and _.max(@scores()) != 21)
       @add(@deck.pop())
 
   hasAce: -> @reduce (memo, card) ->
