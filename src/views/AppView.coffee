@@ -12,9 +12,10 @@ class window.AppView extends Backbone.View
       @model.get('playerHand').isBust()
       return
     'click .stand-button': ->
-      @model.get('dealerHand').stand()
-      @model.get('playerHand').stand()
-      return
+      if not @model.get('playerHand').isBust()
+        @model.get('dealerHand').stand()
+        @model.get('playerHand').stand()
+        return
 
   initialize: ->
     @render()

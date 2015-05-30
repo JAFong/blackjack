@@ -1,21 +1,32 @@
 class window.OutcomeView extends Backbone.View
 
-  template: _.template 'Lose'
+  template: _.template '
+    <%if (this.playerLose) {%>
+      Player Loses!
+    <%}%>'
+    # else if (tie)
+    #   "Tie Game"
+    # else
+    #   "Player Wins!"
+    # '
 
-  initialize: ->
-    console.log 'initialized'
-    console.log @
-        # @collection.on 'add remove change', => @render()
-    console.log(@model)
+  playerLose: false
+  tieGame: false
+  playerWin: false
+
+  initialize: =>
     @model.get('playerHand').on 'playerLose', =>
       console.log 'I heard Busted'
+      @playerLose = true
       @render()
       return
 
   render: ->
-    console.log 'trying to render busted'
     @$el.html(@template())
-    # template: _.template '<h2><% if(userWon){ %>Dealer<% }else if{ %>You<% } %> (<span class="score"></span>)</h2>'
+
+
+
+# template: _.template '<h2><% if(userWon){ %>Dealer<% }else if{ %>You<% } %> (<span class="score"></span>)</h2>'
 
 # if userWon, tie, dealerWon
 

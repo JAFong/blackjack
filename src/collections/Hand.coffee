@@ -23,6 +23,8 @@ class window.Hand extends Backbone.Collection
       @clickedStand = true
     if (@isDealer and not @clickedStand)
       #
+      console.log @
+      console.log @clickedStand
       @clickedStand = true
       @models[0].flip()
     while (@isDealer and _.min(@scores()) < 17 and _.max(@scores()) != 21)
@@ -44,6 +46,8 @@ class window.Hand extends Backbone.Collection
     if _.min(@scores()) > 21
       console.log 'Busted'
       @trigger('playerLose', @)
+      return true
+    return false
 
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0

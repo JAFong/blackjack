@@ -10,19 +10,9 @@ class window.App extends Backbone.Model
     if @get('dealerHand').isBlackJack()
       @trigger('blackJack', @get 'dealerHand')
 
-    if @get('playerHand').isBust()
-      console.log 'playerLose'
-      @trigger('playerLose', @get 'playerHand')
       # when does the game end?
       #
       # when user bust -> dealer automatically draws till end
       # when user blackjack -> dealer automatically draw till end
       # when user stand -> dealer automatically draws till end
-  events:
-    'add remove update change .hit-button': ->
-      @model.get('playerHand').hit()
-      return
-    'click .stand-button': ->
-      @model.get('dealerHand').stand()
-      @model.get('playerHand').stand()
-      return
+
